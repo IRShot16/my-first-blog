@@ -1,0 +1,11 @@
+# 系统文件
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# 编辑器
+.vscode/
+.idea/
+
+# 本项目不使用 npm，这里只是防止误提交
+node_modules/

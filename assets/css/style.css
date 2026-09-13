@@ -1,0 +1,1012 @@
+
+/* ================================
+   Reset
+================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Display",
+        "SF Pro Text",
+        "Helvetica Neue",
+        Arial,
+        "Microsoft YaHei",
+        sans-serif;
+
+    color: #1d1d1f;
+    background: #fff;
+
+    line-height: 1.6;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+/* ================================
+   Navigation
+================================ */
+
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    height: 52px;
+
+    background: rgba(255, 255, 255, 0.82);
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.nav-container {
+    width: 100%;
+    max-width: 1100px;
+
+    height: 52px;
+
+    margin: 0 auto;
+    padding: 0 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 17px;
+    font-weight: 600;
+
+    letter-spacing: -0.5px;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+
+    gap: 30px;
+}
+
+.nav-links a {
+    font-size: 13px;
+
+    color: #424245;
+
+    transition: color 0.2s ease;
+}
+
+.nav-links a:hover {
+    color: #000;
+}
+
+
+/* ================================
+   Hero
+================================ */
+
+.hero {
+    min-height: calc(100vh - 52px);
+
+    padding: 100px 24px;
+
+    display: flex;
+    align-items: center;
+}
+
+.hero-content {
+    width: 100%;
+    max-width: 1100px;
+
+    margin: 0 auto;
+
+    text-align: center;
+}
+
+.hero-label {
+    margin-bottom: 20px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    letter-spacing: 0.12em;
+
+    color: #6e6e73;
+}
+
+.hero h1 {
+    max-width: 900px;
+
+    /* 有限宽度的块要自己居中，光靠 text-align 不够 */
+    margin-right: auto;
+    margin-left: auto;
+
+    font-size: clamp(54px, 8vw, 100px);
+
+    line-height: 1.02;
+
+    letter-spacing: -0.055em;
+
+    font-weight: 600;
+}
+
+.hero-description {
+    max-width: 600px;
+
+    margin-top: 30px;
+    margin-right: auto;
+    margin-left: auto;
+
+    font-size: 21px;
+
+    color: #6e6e73;
+}
+
+.hero-buttons {
+    display: flex;
+    flex-wrap: wrap;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 14px;
+
+    margin-top: 36px;
+}
+
+
+/* ================================
+   Buttons
+================================ */
+
+.button {
+    min-height: 44px;
+
+    padding: 0 22px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 999px;
+
+    font-size: 15px;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+.button:hover {
+    transform: scale(1.03);
+}
+
+.button-primary {
+    color: #fff;
+
+    background: #0071e3;
+}
+
+.button-primary:hover {
+    background: #0077ed;
+}
+
+.button-secondary {
+    color: #1d1d1f;
+
+    background: #f5f5f7;
+}
+
+
+/* ================================
+   Sections
+================================ */
+
+.section {
+    padding: 120px 24px;
+}
+
+.section.gray {
+    background: #f5f5f7;
+}
+
+.section-header {
+    width: 100%;
+    max-width: 1100px;
+
+    margin: 0 auto 50px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 30px;
+}
+
+.section-label {
+    margin-bottom: 16px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    letter-spacing: 0.12em;
+
+    color: #6e6e73;
+}
+
+.section-header h2 {
+    font-size: clamp(42px, 5vw, 64px);
+
+    line-height: 1.05;
+
+    letter-spacing: -0.045em;
+
+    font-weight: 600;
+}
+
+.view-all {
+    margin-bottom: 8px;
+
+    color: #0071e3;
+
+    font-size: 15px;
+
+    white-space: nowrap;
+}
+
+.view-all:hover {
+    text-decoration: underline;
+}
+
+
+/* ================================
+   About
+================================ */
+
+.about-content {
+    width: 100%;
+    max-width: 1100px;
+
+    margin: 0 auto;
+}
+
+.about-text {
+    max-width: 800px;
+
+    margin-bottom: 24px;
+
+    font-size: 22px;
+
+    line-height: 1.6;
+
+    letter-spacing: -0.01em;
+}
+
+
+/* ================================
+   Project Cards
+================================ */
+
+.cards {
+    width: 100%;
+    max-width: 1100px;
+
+    margin: 0 auto;
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+.card {
+    min-height: 330px;
+
+    padding: 36px;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #fff;
+
+    border-radius: 28px;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.08);
+}
+
+.card-number {
+    margin-bottom: 65px;
+
+    font-size: 13px;
+
+    color: #6e6e73;
+
+    letter-spacing: 0.05em;
+}
+
+.card h3 {
+    margin-bottom: 14px;
+
+    font-size: 27px;
+
+    line-height: 1.2;
+
+    letter-spacing: -0.03em;
+}
+
+.card p:not(.card-number) {
+    color: #6e6e73;
+
+    font-size: 16px;
+}
+
+/* 选择器要带上 p，否则会被上面的 .card p:not(.card-number) 盖掉 */
+.card p.card-date {
+    margin-top: 22px;
+
+    font-size: 13px;
+
+    color: #6e6e73;
+
+    letter-spacing: 0.02em;
+}
+
+.card-link {
+    margin-top: auto;
+    padding-top: 28px;
+
+    color: #0071e3;
+
+    font-size: 15px;
+}
+
+
+/* ================================
+   Home Notes
+================================ */
+
+.notes-list {
+    width: 100%;
+    max-width: 1100px;
+
+    margin: 0 auto;
+
+    border-top: 1px solid #d2d2d7;
+}
+
+.note {
+    min-height: 100px;
+
+    padding: 24px 4px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 1px solid #d2d2d7;
+
+    transition:
+        padding 0.2s ease;
+}
+
+.note:hover {
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.note > div {
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+.note-title {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.note-description {
+    color: #6e6e73;
+
+    font-size: 14px;
+}
+
+.note-arrow {
+    color: #0071e3;
+
+    font-size: 20px;
+
+    transition:
+        transform 0.2s ease;
+}
+
+.note:hover .note-arrow {
+    transform: translateX(6px);
+}
+
+.note-date {
+    margin-top: 2px;
+
+    color: #86868b;
+
+    font-size: 13px;
+
+    letter-spacing: 0.02em;
+}
+
+
+/* ================================
+   Projects / Notes Page Header
+================================ */
+
+.page-header {
+    width: 100%;
+    max-width: 1100px;
+
+    margin: 0 auto;
+
+    padding: 110px 24px 70px;
+}
+
+.page-header h1 {
+    font-size: clamp(54px, 7vw, 84px);
+
+    line-height: 1;
+
+    letter-spacing: -0.055em;
+
+    font-weight: 600;
+}
+
+.page-description {
+    max-width: 650px;
+
+    margin-top: 28px;
+
+    font-size: 19px;
+
+    color: #6e6e73;
+}
+
+
+/* ================================
+   Projects Page
+================================ */
+
+.project-list {
+    width: 100%;
+    max-width: 1100px;
+
+    margin: 0 auto;
+
+    padding: 0 24px 60px;
+
+    /* 翻页后滚回列表顶部时，留出导航栏的高度 */
+    scroll-margin-top: 72px;
+}
+
+.project-item {
+    display: block;
+
+    margin-bottom: 20px;
+
+    padding: 34px 38px;
+
+    background: #f5f5f7;
+
+    border-radius: 26px;
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease;
+}
+
+.project-item:hover {
+    transform: translateY(-4px);
+
+    background: #eeeeef;
+}
+
+.project-item-number {
+    margin-bottom: 15px;
+
+    font-size: 13px;
+
+    color: #6e6e73;
+
+    letter-spacing: 0.08em;
+}
+
+.project-item h2 {
+    margin-bottom: 10px;
+
+    font-size: 30px;
+
+    line-height: 1.2;
+
+    letter-spacing: -0.03em;
+}
+
+.project-item-description {
+    max-width: 750px;
+
+    margin-bottom: 20px;
+
+    font-size: 16px;
+
+    color: #6e6e73;
+}
+
+.project-item-date {
+    /* 没有标签时和上面描述的下边距合并，有标签时补出间距 */
+    margin-top: 16px;
+    margin-bottom: 18px;
+
+    color: #86868b;
+
+    font-size: 13px;
+
+    letter-spacing: 0.02em;
+}
+
+.project-item-link {
+    color: #0071e3;
+
+    font-size: 15px;
+}
+
+
+/* ================================
+   Notes Page
+================================ */
+
+.note-page-list {
+    width: 100%;
+    max-width: 1100px;
+
+    margin: 0 auto;
+
+    padding: 0 24px 60px;
+
+    border-top: 1px solid #d2d2d7;
+
+    /* 翻页后滚回列表顶部时，留出导航栏的高度 */
+    scroll-margin-top: 72px;
+}
+
+.note-page-item {
+    min-height: 105px;
+
+    padding: 28px 4px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 1px solid #d2d2d7;
+
+    transition:
+        padding 0.2s ease;
+}
+
+.note-page-item:hover {
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.note-page-item h2 {
+    margin-bottom: 5px;
+
+    font-size: 25px;
+
+    line-height: 1.3;
+
+    font-weight: 500;
+
+    letter-spacing: -0.025em;
+}
+
+.note-page-item p {
+    color: #6e6e73;
+
+    font-size: 15px;
+}
+
+.note-page-arrow {
+    color: #0071e3;
+
+    font-size: 21px;
+
+    transition:
+        transform 0.2s ease;
+}
+
+.note-page-item:hover .note-page-arrow {
+    transform: translateX(6px);
+}
+
+/* 选择器要带上 .note-page-item，否则会被上面的 .note-page-item p 盖掉 */
+.note-page-item .note-page-date {
+    margin-top: 6px;
+
+    color: #86868b;
+
+    font-size: 13px;
+
+    letter-spacing: 0.02em;
+}
+
+
+/* ================================
+   Tags
+================================ */
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 16px;
+}
+
+/* 用半透明灰而不是实色，白色卡片和浅灰底上都能看清 */
+.tag {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 3px 11px;
+
+    border-radius: 999px;
+
+    background: rgba(120, 120, 128, 0.12);
+
+    color: #6e6e73;
+
+    font-size: 12px;
+    line-height: 1.6;
+
+    white-space: nowrap;
+}
+
+/* 首页笔记行本身是带 gap 的竖排 flex，这里把间距收回来一点 */
+.note .tags {
+    margin-top: 6px;
+}
+
+
+/* ================================
+   Pagination
+================================ */
+
+.pagination {
+    width: 100%;
+    max-width: 1100px;
+
+    margin: 0 auto;
+
+    padding: 20px 24px 100px;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+}
+
+.pagination a,
+.pagination span {
+    width: 40px;
+    height: 40px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    font-size: 14px;
+}
+
+.pagination a {
+    color: #424245;
+
+    transition:
+        background 0.2s ease;
+}
+
+.pagination a:hover {
+    background: #f5f5f7;
+}
+
+.pagination .active {
+    color: #fff;
+
+    background: #1d1d1f;
+}
+
+/* 「上一页 / 下一页」比数字宽，单独放宽成胶囊形 */
+.pagination .page-nav {
+    width: auto;
+
+    padding: 0 16px;
+
+    border-radius: 999px;
+}
+
+/* 第一页的「上一页」和最后一页的「下一页」 */
+.pagination .page-nav.disabled {
+    color: #c7c7cc;
+}
+
+/* 页码省略号 */
+.pagination .dots {
+    color: #86868b;
+}
+
+
+/* ================================
+   Contact
+================================ */
+
+.contact-section {
+    text-align: center;
+
+    background: #f5f5f7;
+}
+
+.contact-section h2 {
+    margin-bottom: 22px;
+
+    font-size: clamp(46px, 6vw, 72px);
+
+    line-height: 1.05;
+
+    letter-spacing: -0.05em;
+}
+
+.contact-section > p:not(.section-label) {
+    margin-bottom: 28px;
+
+    color: #6e6e73;
+
+    font-size: 18px;
+}
+
+.contact-link {
+    color: #0071e3;
+
+    font-size: 17px;
+}
+
+.contact-link:hover {
+    text-decoration: underline;
+}
+
+
+/* ================================
+   Footer
+================================ */
+
+.footer {
+    background: #f5f5f7;
+
+    border-top: 1px solid #d2d2d7;
+}
+
+.footer-container {
+    width: 100%;
+    max-width: 1100px;
+
+    min-height: 70px;
+
+    margin: 0 auto;
+    padding: 0 24px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    color: #6e6e73;
+
+    font-size: 13px;
+}
+
+.footer-container div {
+    display: flex;
+
+    gap: 22px;
+}
+
+.footer a:hover {
+    color: #1d1d1f;
+}
+
+
+/* ================================
+   Mobile
+================================ */
+
+@media (max-width: 768px) {
+
+    /* Navigation */
+
+    .nav-container {
+        padding: 0 18px;
+    }
+
+    .nav-links {
+        gap: 16px;
+    }
+
+    .nav-links a {
+        font-size: 12px;
+    }
+
+
+    /* Hero */
+
+    .hero {
+        min-height: auto;
+
+        padding: 90px 20px 100px;
+    }
+
+    .hero h1 {
+        font-size: 54px;
+    }
+
+    .hero-description {
+        font-size: 18px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+
+        align-items: center;
+    }
+
+
+    /* Sections */
+
+    .section {
+        padding: 80px 20px;
+    }
+
+    .section-header {
+        margin-bottom: 36px;
+    }
+
+    .section-header h2 {
+        font-size: 42px;
+    }
+
+
+    /* About */
+
+    .about-text {
+        font-size: 19px;
+    }
+
+
+    /* Cards */
+
+    .cards {
+        grid-template-columns: 1fr;
+
+        gap: 16px;
+    }
+
+    .card {
+        min-height: 290px;
+
+        padding: 30px;
+    }
+
+
+    /* Page Header */
+
+    .page-header {
+        padding: 80px 20px 50px;
+    }
+
+    .page-header h1 {
+        font-size: 56px;
+    }
+
+
+    /* Project */
+
+    .project-list {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .project-item {
+        padding: 28px;
+    }
+
+    .project-item h2 {
+        font-size: 25px;
+    }
+
+
+    /* Notes */
+
+    .note-page-list {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .note-page-item h2 {
+        font-size: 21px;
+    }
+
+
+    /* Pagination */
+
+    .pagination {
+        padding: 20px 20px 80px;
+
+        gap: 6px;
+    }
+
+    .pagination a,
+    .pagination span {
+        width: 34px;
+        height: 34px;
+
+        font-size: 13px;
+    }
+
+    .pagination .page-nav {
+        padding: 0 12px;
+    }
+
+
+    /* Footer */
+
+    .footer-container {
+        min-height: auto;
+
+        padding: 20px;
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 12px;
+    }
+
+}
+
