@@ -16,93 +16,30 @@
 
 const projects = [
     {
-        title: "植物叶片病害严重程度分级",
-        description: "基于多阶段图像分割的植物叶片病害严重程度分级项目。使用 U-Net 与 U-Net++ 对叶片区域和病斑区域进行分割，并根据病斑面积占叶片面积的比例进行严重程度分析。",
-        date: "2026-09-12",
-        url: "https://你的项目链接1.com",
-        tags: ["Python", "PyTorch", "U-Net", "语义分割"]
+        title: "零到全栈",
+        description: "学习B站系列课程。从零开始，建立技术直觉。传授在AI时代 把想法做成产品的能力",
+        date: "2026-06-12",
+        url: "https://github.com/IRShot16/zero-to-tech",
+        tags: ["全栈", "React", "Nextjs", "FastAPI", "SQLite"]
     },
     {
-        title: "AI Learning",
-        description: "人工智能与深度学习相关的学习与实践项目，用于记录模型训练、实验过程以及技术探索。",
-        date: "2026-08-28",
-        url: "https://你的项目链接2.com",
-        tags: ["Python", "PyTorch", "深度学习"]
-    },
-    {
-        title: "Personal Website",
+        title: "个人博客",
         description: "使用 HTML、CSS 和 JavaScript 构建的个人网站，用于整理项目、学习笔记以及个人信息。",
         date: "2026-08-15",
-        url: "https://你的项目链接3.com",
-        tags: ["HTML", "CSS", "JavaScript"]
+        url: "https://github.com/IRShot16/my-first-blog",
+        tags: ["前端三大件", "github pages"]
     },
-    {
-        title: "项目名称",
-        description: "在这里填写项目简介。简单说明项目的用途、使用的技术以及项目特点。",
-        date: "2026-07-30",
-        url: "https://你的项目链接4.com",
-        tags: []
-    },
-    {
-        title: "项目名称",
-        description: "在这里填写项目简介。",
-        date: "2026-07-12",
-        url: "https://你的项目链接5.com",
-        tags: []
-    },
-    {
-        title: "项目名称",
-        description: "在这里填写项目简介。",
-        date: "2026-06-25",
-        url: "https://你的项目链接6.com",
-        tags: []
-    }
 ];
 
 
 const notes = [
     {
-        title: "Python 数据分析",
-        description: "NumPy、Pandas、Matplotlib 等数据分析工具学习记录。",
+        title: "提升效率工具汇总",
+        description: "发现适合自己的好用工具，提升效率。",
         date: "2026-09-10",
-        url: "https://你的笔记链接1.com",
-        tags: ["Python", "NumPy", "Pandas"]
+        url: "https://www.yuque.com/g/debug-vmvaw/exkgpz/hc79qam17vhq2844/collaborator/join?token=iVDhctQdMKpCWp1N&source=doc_collaborator# 《提升效率工具》",
+        tags: ["个人经验", "电脑"]
     },
-    {
-        title: "Deep Learning",
-        description: "神经网络、CNN、语义分割以及深度学习模型相关学习记录。",
-        date: "2026-09-05",
-        url: "https://你的笔记链接2.com",
-        tags: ["深度学习", "CNN", "语义分割"]
-    },
-    {
-        title: "Artificial Intelligence",
-        description: "人工智能、机器学习、深度学习以及相关技术学习笔记。",
-        date: "2026-08-22",
-        url: "https://你的笔记链接3.com",
-        tags: ["机器学习", "深度学习"]
-    },
-    {
-        title: "Python",
-        description: "Python 基础、数据结构、函数以及数据分析学习笔记。",
-        date: "2026-08-10",
-        url: "https://你的笔记链接4.com",
-        tags: ["Python", "基础语法"]
-    },
-    {
-        title: "Web Development",
-        description: "HTML、CSS、JavaScript 以及 Web 开发相关学习记录。",
-        date: "2026-07-28",
-        url: "https://你的笔记链接5.com",
-        tags: ["HTML", "CSS", "JavaScript"]
-    },
-    {
-        title: "Git & GitHub",
-        description: "Git 基础、版本控制、GitHub 使用以及常见操作记录。",
-        date: "2026-07-16",
-        url: "https://你的笔记链接6.com",
-        tags: ["Git", "版本控制"]
-    }
 ];
 
 
