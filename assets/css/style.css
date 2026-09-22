@@ -14,6 +14,9 @@ html {
 }
 
 body {
+    /* 涂鸦层是 absolute 铺满 body 的，body 得有定位才能当参照物 */
+    position: relative;
+
     font-family:
         -apple-system,
         BlinkMacSystemFont,
@@ -25,7 +28,10 @@ body {
         sans-serif;
 
     color: #1d1d1f;
-    background: #fff;
+
+    /* 平底色。之前用的是自上而下的渐变，到底部已经和灰色区块同色了，
+       区块边界就糊掉了 —— 划分要清楚，底色就得是恒定的 */
+    background: #fafbfc;
 
     line-height: 1.6;
 }
@@ -33,6 +39,62 @@ body {
 a {
     color: inherit;
     text-decoration: none;
+}
+
+
+/* ================================
+   背景涂鸦
+   ----------------------------------------------------------------
+   铺满整页的浅色技术词，纯装饰，由 script.js 生成。
+   pointer-events 关掉了，所以不会挡住任何点击。
+================================ */
+
+.bg-doodle {
+    position: absolute;
+    inset: 0;
+
+    z-index: 0;
+
+    overflow: hidden;
+
+    pointer-events: none;
+    user-select: none;
+}
+
+.bg-doodle span {
+    position: absolute;
+
+    /* 用系统自带的手写体，不引外部字体，国内打开不会卡 */
+    font-family:
+        "Segoe Print",
+        "Ink Free",
+        "Bradley Hand",
+        "Marker Felt",
+        "Comic Sans MS",
+        cursive;
+
+    font-size: calc(var(--size) * 1px);
+    font-weight: 600;
+
+    color: #1d1d1f;
+
+    white-space: nowrap;
+
+    transform: rotate(var(--rotate));
+
+    letter-spacing: 0.01em;
+}
+
+/* 少量蓝色点缀，全灰会显得单调 */
+.bg-doodle span.accent {
+    color: #0071e3;
+}
+
+/* 内容整体抬到涂鸦层上面，否则会被盖住 */
+main,
+.footer {
+    position: relative;
+    z-index: 1;
 }
 
 
@@ -47,12 +109,16 @@ a {
 
     height: 52px;
 
-    background: rgba(255, 255, 255, 0.82);
+    /* 比页面底色深一档，才像一条独立出来导航栏；
+       纯白会和下面的区块糊在一起 */
+    background: rgba(232, 236, 241, 0.92);
 
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
 
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .nav-container {
@@ -85,8 +151,9 @@ a {
 
 .nav-links a {
     font-size: 13px;
+    font-weight: 500;
 
-    color: #424245;
+    color: #1d1d1f;
 
     transition: color 0.2s ease;
 }
@@ -100,16 +167,36 @@ a {
    Hero
 ================================ */
 
+/* 不用 vh 撑高度，内容缩了之后固定视口高度会留下大片空白 */
 .hero {
-    min-height: calc(100vh - 52px);
+    position: relative;
 
-    padding: 100px 24px;
+    /* 下边距比上边小：下面紧跟着「关于我」区块，两边的 padding 会叠加 */
+    padding: 92px 24px 48px;
 
     display: flex;
     align-items: center;
 }
 
+/* 大标题后面晕开一层白，免得涂鸦从字上穿过去影响阅读。
+   ::before 是绝对定位的，不会参与 .hero 的 flex 布局 */
+.hero::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background: radial-gradient(
+        58% 62% at 50% 45%,
+        rgba(255, 255, 255, 0.85),
+        rgba(255, 255, 255, 0) 72%
+    );
+}
+
 .hero-content {
+    position: relative;
+    z-index: 1;
+
     width: 100%;
     max-width: 1100px;
 
@@ -119,9 +206,9 @@ a {
 }
 
 .hero-label {
-    margin-bottom: 20px;
+    margin-bottom: 12px;
 
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
 
     letter-spacing: 0.12em;
@@ -136,11 +223,11 @@ a {
     margin-right: auto;
     margin-left: auto;
 
-    font-size: clamp(54px, 8vw, 100px);
+    font-size: clamp(34px, 5vw, 60px);
 
-    line-height: 1.02;
+    line-height: 1.05;
 
-    letter-spacing: -0.055em;
+    letter-spacing: -0.05em;
 
     font-weight: 600;
 }
@@ -148,11 +235,11 @@ a {
 .hero-description {
     max-width: 600px;
 
-    margin-top: 30px;
+    margin-top: 18px;
     margin-right: auto;
     margin-left: auto;
 
-    font-size: 21px;
+    font-size: 17px;
 
     color: #6e6e73;
 }
@@ -164,9 +251,9 @@ a {
     align-items: center;
     justify-content: center;
 
-    gap: 14px;
+    gap: 12px;
 
-    margin-top: 36px;
+    margin-top: 26px;
 }
 
 
@@ -175,9 +262,9 @@ a {
 ================================ */
 
 .button {
-    min-height: 44px;
+    min-height: 38px;
 
-    padding: 0 22px;
+    padding: 0 18px;
 
     display: inline-flex;
     align-items: center;
@@ -185,7 +272,7 @@ a {
 
     border-radius: 999px;
 
-    font-size: 15px;
+    font-size: 14px;
 
     transition:
         transform 0.2s ease,
@@ -218,30 +305,42 @@ a {
 ================================ */
 
 .section {
-    padding: 120px 24px;
+    padding: 68px 24px;
 }
 
+/* 区块边界主要交给上下两条细线，底色只上一层淡灰。
+   之前靠压深底色来分区，alpha 一高就把底下的涂鸦压没了 */
 .section.gray {
-    background: #f5f5f7;
+    background: rgba(237, 240, 245, 0.55);
+
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .section-header {
     width: 100%;
     max-width: 1100px;
 
-    margin: 0 auto 50px;
+    margin: 0 auto 30px;
 
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
 
-    gap: 30px;
+    gap: 24px;
 }
 
+/* inline-flex 而不是 flex：contact 那一块是居中的，
+   用 flex 会撑满整行、把标签挤到左边去 */
 .section-label {
-    margin-bottom: 16px;
+    display: inline-flex;
+    align-items: center;
 
-    font-size: 13px;
+    gap: 8px;
+
+    margin-bottom: 8px;
+
+    font-size: 12px;
     font-weight: 600;
 
     letter-spacing: 0.12em;
@@ -249,22 +348,34 @@ a {
     color: #6e6e73;
 }
 
+/* 每个模块开头一截蓝色小横线，作为模块的起点标记 */
+.section-label::before {
+    content: "";
+
+    width: 16px;
+    height: 2px;
+
+    border-radius: 2px;
+
+    background: #0071e3;
+}
+
 .section-header h2 {
-    font-size: clamp(42px, 5vw, 64px);
+    font-size: clamp(28px, 3.2vw, 40px);
 
-    line-height: 1.05;
+    line-height: 1.1;
 
-    letter-spacing: -0.045em;
+    letter-spacing: -0.04em;
 
     font-weight: 600;
 }
 
 .view-all {
-    margin-bottom: 8px;
+    margin-bottom: 4px;
 
     color: #0071e3;
 
-    font-size: 15px;
+    font-size: 14px;
 
     white-space: nowrap;
 }
@@ -286,15 +397,15 @@ a {
 }
 
 .about-text {
-    max-width: 800px;
+    max-width: 720px;
 
-    margin-bottom: 24px;
+    margin-bottom: 14px;
 
-    font-size: 22px;
+    font-size: 16px;
 
-    line-height: 1.6;
+    line-height: 1.7;
 
-    letter-spacing: -0.01em;
+    letter-spacing: -0.005em;
 }
 
 
@@ -312,77 +423,118 @@ a {
 
     grid-template-columns: repeat(3, 1fr);
 
-    gap: 20px;
+    gap: 16px;
 }
 
 .card {
-    min-height: 330px;
+    position: relative;
 
-    padding: 36px;
+    padding: 20px 22px 18px;
 
     display: flex;
     flex-direction: column;
 
+    overflow: hidden;
+
     background: #fff;
 
-    border-radius: 28px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 16px;
+
+    /* 底下一层浅阴影，让卡片从带纹理的背景上「浮」起来 */
+    box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.04),
+        0 4px 16px rgba(0, 0, 0, 0.03);
 
     transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease;
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+/* 顶部一条细的彩色高光，hover 时才显出来 */
+.card::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 2px;
+
+    background: linear-gradient(90deg, #0071e3, #5ac8fa);
+
+    opacity: 0;
+
+    transition: opacity 0.25s ease;
 }
 
 .card:hover {
-    transform: translateY(-6px);
+    transform: translateY(-3px);
+
+    border-color: rgba(0, 113, 227, 0.25);
 
     box-shadow:
-        0 18px 45px rgba(0, 0, 0, 0.08);
+        0 10px 24px rgba(0, 0, 0, 0.07);
+}
+
+.card:hover::before {
+    opacity: 1;
 }
 
 .card-number {
-    margin-bottom: 65px;
+    margin-bottom: 12px;
 
-    font-size: 13px;
+    font-size: 11px;
 
-    color: #6e6e73;
+    color: #a1a1a6;
 
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
 }
 
 .card h3 {
-    margin-bottom: 14px;
+    margin-bottom: 8px;
 
-    font-size: 27px;
+    font-size: 18px;
 
-    line-height: 1.2;
+    line-height: 1.3;
 
-    letter-spacing: -0.03em;
+    letter-spacing: -0.02em;
 }
 
 .card p:not(.card-number) {
     color: #6e6e73;
 
-    font-size: 16px;
+    font-size: 13px;
+
+    line-height: 1.6;
 }
 
 /* 选择器要带上 p，否则会被上面的 .card p:not(.card-number) 盖掉 */
 .card p.card-date {
-    margin-top: 22px;
+    margin-top: 12px;
 
-    font-size: 13px;
+    font-size: 12px;
 
-    color: #6e6e73;
+    color: #86868b;
 
     letter-spacing: 0.02em;
 }
 
 .card-link {
     margin-top: auto;
-    padding-top: 28px;
+    padding-top: 14px;
 
     color: #0071e3;
 
-    font-size: 15px;
+    font-size: 13px;
+
+    transition: transform 0.25s ease;
+}
+
+.card:hover .card-link {
+    transform: translateX(3px);
 }
 
 
@@ -400,15 +552,13 @@ a {
 }
 
 .note {
-    min-height: 100px;
-
-    padding: 24px 4px;
+    padding: 16px 4px;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    border-bottom: 1px solid #d2d2d7;
+    border-bottom: 1px solid #d8d8de;
 
     transition:
         padding 0.2s ease;
@@ -423,24 +573,26 @@ a {
     display: flex;
     flex-direction: column;
 
-    gap: 4px;
+    gap: 2px;
 }
 
 .note-title {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 500;
+
+    letter-spacing: -0.01em;
 }
 
 .note-description {
-    color: #6e6e73;
+    color: #48484a;
 
-    font-size: 14px;
+    font-size: 13.5px;
 }
 
 .note-arrow {
     color: #0071e3;
 
-    font-size: 20px;
+    font-size: 17px;
 
     transition:
         transform 0.2s ease;
@@ -453,9 +605,9 @@ a {
 .note-date {
     margin-top: 2px;
 
-    color: #86868b;
+    color: #6e6e73;
 
-    font-size: 13px;
+    font-size: 12.5px;
 
     letter-spacing: 0.02em;
 }
@@ -466,20 +618,43 @@ a {
 ================================ */
 
 .page-header {
+    position: relative;
+
     width: 100%;
     max-width: 1100px;
 
     margin: 0 auto;
 
-    padding: 110px 24px 70px;
+    padding: 56px 24px 34px;
+}
+
+/* 标题后面垫一层白，把涂鸦挡在大字外面。
+   这里是左对齐的，用横向渐变，居中的径向渐变盖不到左边 */
+.page-header::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background: linear-gradient(
+        100deg,
+        rgba(255, 255, 255, 0.94) 0%,
+        rgba(255, 255, 255, 0.88) 55%,
+        rgba(255, 255, 255, 0) 90%
+    );
+}
+
+.page-header > * {
+    position: relative;
+    z-index: 1;
 }
 
 .page-header h1 {
-    font-size: clamp(54px, 7vw, 84px);
+    font-size: clamp(32px, 4vw, 48px);
 
-    line-height: 1;
+    line-height: 1.05;
 
-    letter-spacing: -0.055em;
+    letter-spacing: -0.045em;
 
     font-weight: 600;
 }
@@ -487,9 +662,9 @@ a {
 .page-description {
     max-width: 650px;
 
-    margin-top: 28px;
+    margin-top: 14px;
 
-    font-size: 19px;
+    font-size: 15px;
 
     color: #6e6e73;
 }
@@ -505,72 +680,106 @@ a {
 
     margin: 0 auto;
 
-    padding: 0 24px 60px;
+    padding: 0 24px 40px;
 
     /* 翻页后滚回列表顶部时，留出导航栏的高度 */
     scroll-margin-top: 72px;
 }
 
 .project-item {
+    position: relative;
+
     display: block;
 
-    margin-bottom: 20px;
+    margin-bottom: 12px;
 
-    padding: 34px 38px;
+    padding: 20px 24px;
 
-    background: #f5f5f7;
+    overflow: hidden;
 
-    border-radius: 26px;
+    background: rgba(245, 245, 247, 0.8);
+
+    /* 常态下就有一条浅边，半透明底在浅色背景上才有轮廓 */
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 16px;
 
     transition:
         transform 0.25s ease,
-        background 0.25s ease;
+        background 0.25s ease,
+        border-color 0.25s ease;
+}
+
+/* 左侧一条竖的强调线，hover 时长出来 */
+.project-item::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 3px;
+    height: 100%;
+
+    background: #0071e3;
+
+    transform: scaleY(0);
+    transform-origin: top;
+
+    transition: transform 0.25s ease;
 }
 
 .project-item:hover {
-    transform: translateY(-4px);
+    transform: translateY(-2px);
 
-    background: #eeeeef;
+    background: #fff;
+
+    border-color: rgba(0, 0, 0, 0.07);
+}
+
+.project-item:hover::before {
+    transform: scaleY(1);
 }
 
 .project-item-number {
-    margin-bottom: 15px;
+    margin-bottom: 6px;
 
-    font-size: 13px;
+    font-size: 11px;
 
-    color: #6e6e73;
+    color: #a1a1a6;
 
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
 }
 
 .project-item h2 {
-    margin-bottom: 10px;
+    margin-bottom: 6px;
 
-    font-size: 30px;
+    font-size: 20px;
 
-    line-height: 1.2;
+    line-height: 1.3;
 
-    letter-spacing: -0.03em;
+    letter-spacing: -0.02em;
 }
 
 .project-item-description {
     max-width: 750px;
 
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 
-    font-size: 16px;
+    font-size: 14px;
+
+    line-height: 1.65;
 
     color: #6e6e73;
 }
 
 .project-item-date {
     /* 没有标签时和上面描述的下边距合并，有标签时补出间距 */
-    margin-top: 16px;
-    margin-bottom: 18px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 
     color: #86868b;
 
-    font-size: 13px;
+    font-size: 12px;
 
     letter-spacing: 0.02em;
 }
@@ -578,7 +787,7 @@ a {
 .project-item-link {
     color: #0071e3;
 
-    font-size: 15px;
+    font-size: 13px;
 }
 
 
@@ -592,24 +801,22 @@ a {
 
     margin: 0 auto;
 
-    padding: 0 24px 60px;
+    padding: 0 24px 40px;
 
-    border-top: 1px solid #d2d2d7;
+    border-top: 1px solid #d8d8de;
 
     /* 翻页后滚回列表顶部时，留出导航栏的高度 */
     scroll-margin-top: 72px;
 }
 
 .note-page-item {
-    min-height: 105px;
-
-    padding: 28px 4px;
+    padding: 18px 4px;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    border-bottom: 1px solid #d2d2d7;
+    border-bottom: 1px solid #d8d8de;
 
     transition:
         padding 0.2s ease;
@@ -621,27 +828,27 @@ a {
 }
 
 .note-page-item h2 {
-    margin-bottom: 5px;
+    margin-bottom: 4px;
 
-    font-size: 25px;
+    font-size: 18px;
 
-    line-height: 1.3;
+    line-height: 1.35;
 
-    font-weight: 500;
+    font-weight: 600;
 
-    letter-spacing: -0.025em;
+    letter-spacing: -0.015em;
 }
 
 .note-page-item p {
-    color: #6e6e73;
+    color: #48484a;
 
-    font-size: 15px;
+    font-size: 14px;
 }
 
 .note-page-arrow {
     color: #0071e3;
 
-    font-size: 21px;
+    font-size: 17px;
 
     transition:
         transform 0.2s ease;
@@ -653,11 +860,11 @@ a {
 
 /* 选择器要带上 .note-page-item，否则会被上面的 .note-page-item p 盖掉 */
 .note-page-item .note-page-date {
-    margin-top: 6px;
+    margin-top: 5px;
 
-    color: #86868b;
+    color: #6e6e73;
 
-    font-size: 13px;
+    font-size: 12.5px;
 
     letter-spacing: 0.02em;
 }
@@ -671,9 +878,9 @@ a {
     display: flex;
     flex-wrap: wrap;
 
-    gap: 8px;
+    gap: 6px;
 
-    margin-top: 16px;
+    margin-top: 10px;
 }
 
 /* 用半透明灰而不是实色，白色卡片和浅灰底上都能看清 */
@@ -681,23 +888,23 @@ a {
     display: inline-flex;
     align-items: center;
 
-    padding: 3px 11px;
+    padding: 2px 9px;
 
     border-radius: 999px;
 
     background: rgba(120, 120, 128, 0.12);
 
-    color: #6e6e73;
+    color: #5a5a5f;
 
-    font-size: 12px;
-    line-height: 1.6;
+    font-size: 11px;
+    line-height: 1.7;
 
     white-space: nowrap;
 }
 
 /* 首页笔记行本身是带 gap 的竖排 flex，这里把间距收回来一点 */
 .note .tags {
-    margin-top: 6px;
+    margin-top: 4px;
 }
 
 
@@ -711,7 +918,7 @@ a {
 
     margin: 0 auto;
 
-    padding: 20px 24px 100px;
+    padding: 14px 24px 60px;
 
     display: flex;
     flex-wrap: wrap;
@@ -719,13 +926,13 @@ a {
     align-items: center;
     justify-content: center;
 
-    gap: 8px;
+    gap: 6px;
 }
 
 .pagination a,
 .pagination span {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
 
     display: inline-flex;
 
@@ -734,7 +941,7 @@ a {
 
     border-radius: 50%;
 
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .pagination a {
@@ -778,34 +985,37 @@ a {
    Contact
 ================================ */
 
+/* 只画上边线，下面那条由 footer 的 border-top 承担，否则会并成两条 */
 .contact-section {
     text-align: center;
 
-    background: #f5f5f7;
+    background: rgba(237, 240, 245, 0.55);
+
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .contact-section h2 {
-    margin-bottom: 22px;
+    margin-bottom: 14px;
 
-    font-size: clamp(46px, 6vw, 72px);
+    font-size: clamp(30px, 3.6vw, 44px);
 
-    line-height: 1.05;
+    line-height: 1.1;
 
-    letter-spacing: -0.05em;
+    letter-spacing: -0.04em;
 }
 
 .contact-section > p:not(.section-label) {
-    margin-bottom: 28px;
+    margin-bottom: 18px;
 
     color: #6e6e73;
 
-    font-size: 18px;
+    font-size: 15px;
 }
 
 .contact-link {
     color: #0071e3;
 
-    font-size: 17px;
+    font-size: 15px;
 }
 
 .contact-link:hover {
@@ -818,16 +1028,16 @@ a {
 ================================ */
 
 .footer {
-    background: #f5f5f7;
+    background: rgba(237, 240, 245, 0.55);
 
-    border-top: 1px solid #d2d2d7;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .footer-container {
     width: 100%;
     max-width: 1100px;
 
-    min-height: 70px;
+    min-height: 56px;
 
     margin: 0 auto;
     padding: 0 24px;
@@ -859,6 +1069,12 @@ a {
 
 @media (max-width: 768px) {
 
+    /* 涂鸦整体缩小，窄屏上词太大会互相压在一起 */
+    .bg-doodle span {
+        font-size: calc(var(--size) * 0.68px);
+    }
+
+
     /* Navigation */
 
     .nav-container {
@@ -879,15 +1095,15 @@ a {
     .hero {
         min-height: auto;
 
-        padding: 90px 20px 100px;
+        padding: 56px 20px 64px;
     }
 
     .hero h1 {
-        font-size: 54px;
+        font-size: 34px;
     }
 
     .hero-description {
-        font-size: 18px;
+        font-size: 15px;
     }
 
     .hero-buttons {
@@ -900,22 +1116,22 @@ a {
     /* Sections */
 
     .section {
-        padding: 80px 20px;
+        padding: 48px 20px;
     }
 
     .section-header {
-        margin-bottom: 36px;
+        margin-bottom: 22px;
     }
 
     .section-header h2 {
-        font-size: 42px;
+        font-size: 26px;
     }
 
 
     /* About */
 
     .about-text {
-        font-size: 19px;
+        font-size: 15px;
     }
 
 
@@ -924,24 +1140,22 @@ a {
     .cards {
         grid-template-columns: 1fr;
 
-        gap: 16px;
+        gap: 12px;
     }
 
     .card {
-        min-height: 290px;
-
-        padding: 30px;
+        padding: 18px 18px 16px;
     }
 
 
     /* Page Header */
 
     .page-header {
-        padding: 80px 20px 50px;
+        padding: 40px 20px 26px;
     }
 
     .page-header h1 {
-        font-size: 56px;
+        font-size: 30px;
     }
 
 
@@ -953,11 +1167,11 @@ a {
     }
 
     .project-item {
-        padding: 28px;
+        padding: 18px 20px;
     }
 
     .project-item h2 {
-        font-size: 25px;
+        font-size: 18px;
     }
 
 
@@ -969,24 +1183,24 @@ a {
     }
 
     .note-page-item h2 {
-        font-size: 21px;
+        font-size: 16px;
     }
 
 
     /* Pagination */
 
     .pagination {
-        padding: 20px 20px 80px;
+        padding: 12px 20px 48px;
 
-        gap: 6px;
+        gap: 4px;
     }
 
     .pagination a,
     .pagination span {
-        width: 34px;
-        height: 34px;
+        width: 30px;
+        height: 30px;
 
-        font-size: 13px;
+        font-size: 12px;
     }
 
     .pagination .page-nav {

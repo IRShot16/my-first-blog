@@ -53,6 +53,19 @@ const HOME_LIMIT = 3;
 // 索引页每页展示几条
 const ITEMS_PER_PAGE = 5;
 
+// 背景涂鸦用到的技术词。取自 GitHub Topics 和 Stack Overflow 的高频话题，
+// 静态写死，不请求任何接口。想换词只改这个数组就行。
+const DOODLE_TAGS = [
+    "GitHub", "AI", "ChatGPT", "LLM", "Prompt", "Agent", "RAG",
+    "Python", "JavaScript", "TypeScript", "Rust", "Go", "SQL",
+    "React", "Next.js", "Node.js", "FastAPI", "Vue",
+    "Linux", "Docker", "K8s", "Git", "Nginx", "Redis", "MySQL",
+    "API", "Open Source", "Algorithm", "Frontend", "Backend", "Full-Stack",
+    "PyTorch", "Hugging Face", "Cloud", "Vercel",
+    "VS Code", "Markdown", "Terminal",
+    "开源", "机器学习", "深度学习", "全栈", "云原生", "算法"
+];
+
 
 /* ================================================================
    工具函数
@@ -97,6 +110,109 @@ function tagsHTML(tags) {
         .join("");
 
     return `<div class="tags">${items}</div>`;
+}
+
+
+/* ================================================================
+   背景涂鸦
+   ----------------------------------------------------------------
+   把上面的技术词撒成一整页的浅色手写体，纯装饰。
+   位置用固定种子的伪随机数算出来，所以每次刷新图案都一模一样，
+   不会加载一次跳一次。
+================================================================ */
+
+// 固定种子的伪随机（mulberry32），保证涂鸦位置稳定可复现
+function createRandom(seed) {
+    let state = seed;
+
+    return function () {
+        state = (state + 0x6d2b79f5) | 0;
+
+        let t = Math.imul(state ^ (state >>> 15), 1 | state);
+
+        t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+}
+
+// 粗略估算一行文字有多宽，用来判断会不会顶出右边界。
+// 中文按一个字符宽算，英文按 0.58 算，够用了
+function estimateTextWidth(text, fontSize) {
+    let units = 0;
+
+    for (const character of text) {
+        units += /[一-龥]/.test(character) ? 1 : 0.58;
+    }
+
+    return units * fontSize;
+}
+
+function renderDoodle() {
+    const layer = document.createElement("div");
+
+    layer.className = "bg-doodle";
+
+    // 装饰层，读屏软件直接跳过
+    layer.setAttribute("aria-hidden", "true");
+
+    const random = createRandom(20260922);
+
+    // 窄屏少分几列，否则 nowrap 的词会叠成一团
+    const columns = window.innerWidth < 768 ? 3 : 5;
+    const rows = Math.ceil(DOODLE_TAGS.length / columns);
+
+    const layerWidth = document.documentElement.clientWidth;
+
+    DOODLE_TAGS.forEach(function (tag, index) {
+        const element = document.createElement("span");
+
+        element.textContent = tag;
+
+        // 先均分到网格里，再在格子内部随机偏移，避免看出行列
+        const column = index % columns;
+        const row = Math.floor(index / columns);
+
+        const size = 14 + random() * 20;
+
+        // 往右挪到放不下就把整行往回收，免得出现 "TypeSc" 这种断头词。
+        // 收不动（词比屏幕还宽）就让 overflow: hidden 去裁
+        const maxLeft =
+            ((layerWidth - estimateTextWidth(tag, size) - 12) / layerWidth) * 100;
+
+        const left = Math.min(
+            ((column + 0.08 + random() * 0.7) / columns) * 100,
+            Math.max(1, maxLeft)
+        );
+
+        const top = ((row + 0.12 + random() * 0.76) / rows) * 100;
+
+        element.style.left = left.toFixed(2) + "%";
+        element.style.top = top.toFixed(2) + "%";
+
+        // 字号和角度走 CSS 变量，方便窄屏断点里整体缩放
+        element.style.setProperty("--size", size.toFixed(1));
+        element.style.setProperty(
+            "--rotate",
+            ((random() * 2 - 1) * 13).toFixed(1) + "deg"
+        );
+
+        // 蓝色点缀稍微重一点，不然混在灰字里看不出来
+        const isAccent = random() < 0.22;
+        const opacity = 0.09 + random() * 0.11;
+
+        element.style.opacity = (
+            isAccent ? Math.min(opacity * 1.45, 0.26) : opacity
+        ).toFixed(3);
+
+        if (isAccent) {
+            element.className = "accent";
+        }
+
+        layer.appendChild(element);
+    });
+
+    document.body.appendChild(layer);
 }
 
 
@@ -358,6 +474,9 @@ function setupPagination(options) {
 ================================================================ */
 
 document.addEventListener("DOMContentLoaded", function () {
+
+    // 三个页面都先铺背景涂鸦
+    renderDoodle();
 
     const sortedProjects = sortByDateDesc(projects);
     const sortedNotes = sortByDateDesc(notes);
